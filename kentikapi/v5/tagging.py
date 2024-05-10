@@ -179,6 +179,59 @@ class Criteria(object):
 
         self._json_dict[key].append(value)
 
+    def add_field(self, field, value):
+        """Generic function for adding field from function argument. Using API model field names"""
+        field = str(field)
+        if field == 'port':
+            self.add_port(value)
+        elif field == 'vlans':
+            self.add_vlan(value)
+        elif field == 'protocol':
+            self.add_protocol(value)
+        elif field == 'asn':
+            self.add_asn(value)
+        elif field == 'lasthop_as_name':
+            self.add_lasthop_as_name(value)
+        elif field == 'nexthop_asn':
+            self.add_nexthop_asn(value)
+        elif field == 'nexthop_as_name':
+            self.add_nexthop_as_name(value)
+        elif field == 'bgp_aspath':
+            self.add_bgp_aspath(value)
+        elif field == 'bgp_community':
+            self.add_bgp_community(value)
+        elif field == 'addr':
+            self.add_addr(value)
+        elif field == 'mac':
+            self.add_mac(value)
+        elif field == 'country':
+            self.add_country(value)
+        elif field == 'site':
+            self.add_site(value)
+        elif field == 'device_type':
+            self.add_device_type(value)
+        elif field == 'interface_name':
+            self.add_interface_name(value)
+        elif field == 'device_name':
+            self.add_device_name(value)
+        elif field == 'nexthop':
+            self.add_nexthop(value)
+        else:
+            raise ValueError("Unknown field")
+
+    def add_udr(self, field, value):
+        """Add generic UDR fields for specific device subtypes"""
+        field = str(field)
+        if field.contains('int'):
+            value = int(value)
+        elif field.contains('str') or field.contains('inet'):
+            value = str(value)
+        else:
+            raise ValueError("Unknown field")
+
+        self._json_dict[field] = value
+
+
     def add_port(self, port):
         if port < 0 or port > 65535:
             raise ValueError("Invalid port. Valid: 0-65535.")
