@@ -191,23 +191,23 @@ class Criteria(object):
         elif field == 'asn':
             self.add_asn(value)
         elif field == 'lasthop_as_name':
-            self.add_lasthop_as_name(value)
+            self.add_last_hop_asn_name(value)
         elif field == 'nexthop_asn':
-            self.add_nexthop_asn(value)
+            self.add_next_hop_asn(value)
         elif field == 'nexthop_as_name':
-            self.add_nexthop_as_name(value)
+            self.add_next_hop_asn_name(value)
         elif field == 'bgp_aspath':
-            self.add_bgp_aspath(value)
+            self.add_bgp_as_path(value)
         elif field == 'bgp_community':
             self.add_bgp_community(value)
         elif field == 'addr':
-            self.add_addr(value)
+            self.add_ip_address(value)
         elif field == 'mac':
-            self.add_mac(value)
+            self.add_mac_address(value)
         elif field == 'country':
-            self.add_country(value)
+            self.add_country_code(value)
         elif field == 'site':
-            self.add_site(value)
+            self.add_site_name(value)
         elif field == 'device_type':
             self.add_device_type(value)
         elif field == 'interface_name':
@@ -215,7 +215,7 @@ class Criteria(object):
         elif field == 'device_name':
             self.add_device_name(value)
         elif field == 'nexthop':
-            self.add_nexthop(value)
+            self.add_next_hop_ip_address(value)
         else:
             raise ValueError("Unknown field")
 
@@ -228,7 +228,7 @@ class Criteria(object):
             value = str(value)
         else:
             raise ValueError("Unknown field")
-
+        # assume that only single value is allowed in the udr fields
         self._json_dict[field] = value
 
 
@@ -308,7 +308,7 @@ class Criteria(object):
 
         _validate_asn(start)
         _validate_asn(end)
-        self._ensure_array('nextohp_as_name', '%d-%d' % (start, end))
+        self._ensure_array('nexthop_as_name', '%d-%d' % (start, end))
 
     def add_next_hop_asn_name(self, next_hop_asn_name):
         v = next_hop_asn_name.strip()
